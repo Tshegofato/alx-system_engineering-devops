@@ -11,4 +11,5 @@ rm -r /tmp/my_first_directory  removes directory my_first_directory from directo
 cd -  changes the working dirctory to the previous one
 ls -al . .. /boot  lists all files including hidden files in the current dirctory and the parent directory and the /boot directory in long format
 
-file /tmp/iamfile  prints the type of the file named iamafile in the dirctory /tmp  
+file /tmp/iamfile  prints the type of the file named iamafile in the dirctory /tmp
+ln -s /bin/ls __ls__  Create a symbolic link to /bin/ls, named __ls__ in the current working directory  
