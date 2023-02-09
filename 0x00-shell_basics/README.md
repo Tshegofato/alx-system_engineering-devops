@@ -12,4 +12,5 @@ cd -  changes the working dirctory to the previous one
 ls -al . .. /boot  lists all files including hidden files in the current dirctory and the parent directory and the /boot directory in long format
 
 file /tmp/iamfile  prints the type of the file named iamafile in the dirctory /tmp
-ln -s /bin/ls __ls__  Create a symbolic link to /bin/ls, named __ls__ in the current working directory  
+ln -s /bin/ls __ls__  Create a symbolic link to /bin/ls, named __ls__ in the current working directory
+cp -un *.html ../  copies all the HTML files from the current working directory to the parent of the working directory, but only copy files that did not exist in the parent of the working directory or were newer than the versions in the parent of the working directory.  
