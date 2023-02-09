@@ -9,4 +9,6 @@ mv /tmp/betty /tmp/my_first_directory  Moves the file betty from /tmp/ to /tmp/m
 rm /tmp/my_first_directory/betty  deletes the file betty
 rm -r /tmp/my_first_directory  removes directory my_first_directory from directory /tmp/
 cd -  changes the working dirctory to the previous one
-ls -al . .. /boot  lists all files including hidden files in the current dirctory and the parent directory and the /boot directory in long format  
+ls -al . .. /boot  lists all files including hidden files in the current dirctory and the parent directory and the /boot directory in long format
+
+file /tmp/iamfile  prints the type of the file named iamafile in the dirctory /tmp  
