@@ -7,3 +7,4 @@ ls -lna displays current directory content in long format with user and group ID
 mkdir /tmp/my_first_directory  creates a directory named my_first_directory in the /tmp/ directory
 mv /tmp/betty /tmp/my_first_directory  Moves the file betty from /tmp/ to /tmp/my_first_directory
 rm /tmp/my_first_directory/betty  deletes the file betty
+rm -r /tmp/my_first_directory  removes directory my_first_directory from directory /tmp/
