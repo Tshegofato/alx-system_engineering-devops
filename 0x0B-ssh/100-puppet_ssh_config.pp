@@ -1,24 +1,17 @@
-#!/usr/bin/env puppet
-# Puppet manifest to configure SSH client settings.
+#!/usr/bin/env bash
+# Seting up my client config file
+include stdlib
 
-# Define SSH client configuration
-file { '/home/your_username/.ssh/config':
-  ensure  => present,
-  content => "Host *\n  IdentityFile ~/.ssh/school\n  PasswordAuthentication no\n",
-  mode    => '0600',
-  owner   => 'your_username',
-  group   => 'your_username',
+file_line { 'Turn off passwd auth':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '    PasswordAuthentication no',
+  replace => true,
 }
 
-# Set correct permissions for the .ssh directory
-file { '/home/your_username/.ssh':
-  ensure => directory,
-  mode   => '0700',
-  owner  => 'your_username',
-  group  => 'your_username',
-}
-
-# Notify user about the changes
-notify { 'SSH configuration updated successfully':
-  require => File['/home/your_username/.ssh/config'],
+file_line { 'Delare identity file':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '     IdentityFile ~/.ssh/school',
+  replace => true,
 }
