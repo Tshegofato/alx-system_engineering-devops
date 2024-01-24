@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Add the provided SSH public key to the authorized_keys file of the ubuntu user on the server.
+
+# Set the public key
+public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNdtrNGtTXe5Tp1EJQop8mOSAuRGLjJ6DW4PqX4wId/Kawz35ESampIqHSOTJmbQ8UlxdJuk0gAXKk3Ncle4safGYqM/VeDK3LN5iAJxf4kcaxNtS3eVxWBE5iF3FbIjOqwxw5Lf5sRa5yXxA8HfWidhbIG5TqKL922hPgsCGABIrXRlfZYeC0FEuPWdr6smOElSVvIXthRWp9cr685KdCI+COxlj1RdVsvIo+zunmLACF9PYdjB2s96Fn0ocD3c5SGLvDOFCyvDojSAOyE70ebIElnskKsDTGwfT4P6jh9OBzTyQEIS2jOaE5RQq4IB4DsMhvbjDSQrP0MdCLgwkN"
+
+# Set the server's IP address or hostname
+server_ip="18.208.119.244"
+
+# Set the SSH user on the server
+ssh_user="ubuntu"
+
+# SSH connection to append the public key to authorized_keys
+ssh -o "StrictHostKeyChecking=no" $ssh_user@$server_ip "echo '$public_key' >> ~/.ssh/authorized_keys"
+
+echo "SSH public key added to the authorized_keys file of the ubuntu user on the server."
