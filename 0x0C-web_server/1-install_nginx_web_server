@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# This script installs and configures nginx on an Ubuntu machine.
+
+# Update package list and install nginx with -y option
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Ensure nginx is listening on port 80
+sudo sed -i '/listen 80 default_server;/c\listen 80;' /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+sudo service nginx restart
+
+# Verify nginx is running
+nginx_status=$(sudo service nginx status)
+if [[ $nginx_status =~ "Active: active" ]]; then
+    echo "Nginx is running and listening on port 80."
+else
+    echo "Error: Nginx is not running as expected."
+fi
+
+# Create a sample HTML page with "Hello World!"
+echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/index.html > /dev/null
+
+# Verify Nginx returns "Hello World!" for a GET request
+curl_output=$(curl -s http://localhost)
+if [[ $curl_output =~ "Hello World!" ]]; then
+    echo "Nginx returns 'Hello World!' as expected."
+else
+    echo "Error: Nginx did not return 'Hello World!' as expected."
+fi
