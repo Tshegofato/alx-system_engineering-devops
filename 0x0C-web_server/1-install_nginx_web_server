@@ -9,10 +9,10 @@ sudo apt-get install -y nginx
 sudo sed -i '/listen 80 default_server;/c\listen 80;' /etc/nginx/sites-available/default
 
 # Restart nginx without using systemctl
-sudo service nginx restart
+sudo /etc/init.d/nginx restart
 
 # Verify nginx is running
-nginx_status=$(sudo service nginx status)
+nginx_status=$(sudo /etc/init.d/nginx status)
 if [[ $nginx_status =~ "Active: active" ]]; then
     echo "Nginx is running and listening on port 80."
 else
@@ -24,7 +24,7 @@ echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/
 
 # Verify Nginx returns "Hello World!" for a GET request
 curl_output=$(curl -s http://localhost)
-if [[ "$curl_output" == "<html><body><h1>Hello World!</h1></body></html>" ]]; then
+if [[ "$curl_output" == *"<html><body><h1>Hello World!</h1></body></html>"* ]]; then
     echo "Nginx returns 'Hello World!' as expected."
 else
     echo "Error: Nginx did not return 'Hello World!' as expected."
