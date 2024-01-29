@@ -24,7 +24,7 @@ echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/
 
 # Verify Nginx returns "Hello World!" for a GET request
 curl_output=$(curl -s http://localhost)
-if [[ $curl_output =~ "Hello World!" ]]; then
+if [[ "$curl_output" == "<html><body><h1>Hello World!</h1></body></html>" ]]; then
     echo "Nginx returns 'Hello World!' as expected."
 else
     echo "Error: Nginx did not return 'Hello World!' as expected."
