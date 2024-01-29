@@ -22,9 +22,12 @@ fi
 # Create a sample HTML page with "Hello World!"
 echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/index.html > /dev/null
 
+# Wait for nginx to fully restart (adjust sleep duration if needed)
+sleep 2
+
 # Verify Nginx returns "Hello World!" for a GET request
 curl_output=$(curl -s http://localhost)
-if [[ "$curl_output" == *"<html><body><h1>Hello World!</h1></body></html>"* ]]; then
+if [[ "$curl_output" == *"<h1>Hello World!</h1>"* ]]; then
     echo "Nginx returns 'Hello World!' as expected."
 else
     echo "Error: Nginx did not return 'Hello World!' as expected."
