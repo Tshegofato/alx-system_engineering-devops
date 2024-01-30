@@ -12,7 +12,8 @@ sudo sed -i '/listen 80 default_server;/c\listen 80;' /etc/nginx/sites-available
 sudo service nginx restart
 
 # Verify nginx is running
-if sudo service nginx status | grep -q "Active: active"; then
+nginx_status=$(sudo service nginx status)
+if echo "$nginx_status" | grep -q "Active: active"; then
     echo "Nginx is running and listening on port 80."
 else
     echo "Error: Nginx is not running as expected."
@@ -25,9 +26,9 @@ echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/
 sleep 2
 
 # Verify Nginx returns "Hello World!" for a GET request
-curl_output=$(curl -s http://localhost)
-if [[ "$curl_output" == *"<h1>Hello World!</h1>"* ]]; then
-    echo "Nginx returns 'Hello World!' as expected."
+curl_output=$(curl -s -w "%{http_code}" http://localhost)
+if [[ "$curl_output" == *"<h1>Hello World!</h1>200"* ]]; then
+    echo "Nginx returns 'Hello World!' and HTTP code 200 as expected."
 else
-    echo "Error: Nginx did not return 'Hello World!' as expected."
+    echo "Error: Nginx did not return 'Hello World!' or HTTP code 200 as expected."
 fi
