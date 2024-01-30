@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# This script configures Nginx on an Ubuntu machine for a permanent redirect.
+
+# Update package list and install nginx with -y option
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Ensure nginx is listening on port 80
+sudo sed -i '/listen 80 default_server;/c\listen 80;' /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+sudo service nginx restart
+
+# Verify nginx is running
+nginx_status=$(sudo service nginx status)
+if echo "$nginx_status" | grep -q "Active: active"; then
+    echo "Nginx is running and listening on port 80."
+else
+    echo "Error: Nginx is not running as expected."
+fi
+
+# Create a sample HTML page with "Hello World!"
+echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/index.html > /dev/null
+
+# Configure Nginx for a permanent redirect from /redirect_me
+sudo sed -i '/location \/ {/a \\nlocation /redirect_me {\n    return 301 http://example.com/redirected_page;\n}' /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+sudo service nginx restart
+
+# Verify Nginx returns a 301 Moved Permanently for /redirect_me
+redirect_status=$(curl -s -w "%{http_code}" http://localhost/redirect_me)
+if [[ "$redirect_status" == "301" ]]; then
+    echo "Nginx redirects /redirect_me with a 301 Moved Permanently as expected."
+else
+    echo "Error: Nginx did not return a 301 Moved Permanently for /redirect_me as expected."
+fi
