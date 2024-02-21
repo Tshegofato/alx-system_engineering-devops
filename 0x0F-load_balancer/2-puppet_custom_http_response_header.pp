@@ -1,32 +1,16 @@
-#!/usr/bin/env bash
-# Configures Nginx on a new Ubuntu machine to add a custom HTTP header
+#automate task 0 but with Puppet
 
-# Update packages before installations
-sudo apt-get update
-
-# Install Nginx
-sudo apt-get install -y nginx
-
-# Create a custom configuration file for Nginx
-custom_config="/etc/nginx/sites-available/default"
-sudo tee "$custom_config" > /dev/null <<EOL
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    server_name _;
-
-    add_header X-Served-By \$hostname;
-
-    location / {
-        root /var/www/html;
-        index index.html;
-    }
+exec {'update':
+  command => '/usr/bin/apt-get update',
 }
-EOL
-
-# Create a symbolic link to enable the custom configuration
-sudo ln -s "$custom_config" "/etc/nginx/sites-enabled/"
-
-# Restart Nginx service
-sudo service nginx restart
+-> package {'nginx':
+  ensure => 'present',
+}
+-> file_line { 'http_header':
+  path  => '/etc/nginx/nginx.conf',
+  match => 'http {',
+  line  => "http {\n\tadd_header X-Served-By \"${hostname}\";",
+}
+-> exec {'run':
+  command => '/usr/sbin/service nginx restart',
+}
