@@ -6,3 +6,4 @@ month=$(date +"%m")
 year=$(date +"%Y")
 file_name="$day-$month-$year.tar.gz"
 tar -czvf "$file_name" backup.sql
+
