@@ -1,4 +1,5 @@
-pt for parsing web data from an api
+#!/usr/bin/python3
+"""script for parsing web data from an api
 """
 import json
 import requests
