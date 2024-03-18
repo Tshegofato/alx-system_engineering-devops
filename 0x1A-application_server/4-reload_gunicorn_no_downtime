@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 # Check if Gunicorn is running
-sudo service gunicorn reload
+sudo systemctl reload gunicorn.service
+
