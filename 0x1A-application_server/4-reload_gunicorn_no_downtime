@@ -1,4 +1,4 @@
+#!/usr/bin/env bash
+# Check if Gunicorn is running
 
-ads Gunicorn.
-
-ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
+sudo systemctl restart gunicorn
